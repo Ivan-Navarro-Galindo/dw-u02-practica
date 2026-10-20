@@ -130,10 +130,11 @@ function añadirCampeon(lista) {
 
 }
 
-
-//Variables y validaciones para la función para filtrar por Rol
+//función filtrar por rol
 
 function filtrarPorRol(lista) {
+
+//Variables y validaciones para la función para filtrar por Rol
 
 const rolesValidos = ["jungla", "support", "carry", "top", "mid"]
 const rol = prompt("Introduce el rol: ").toLowerCase()
@@ -153,6 +154,50 @@ if(!rolesValidos.includes(rol)) {
 
 }
 
+function modificarCampeon(lista) {
+
+    mostrarCampeones(lista)
+
+    const id = Number(prompt("Introduce el id del campeon a modificar: "))
+
+   const campeon = lista.find(c => c.id === id) 
+   if(!campeon) {
+    console.log("No existe ese campeon :(")
+    return
+   }
+
+   //asignamos nuevo nombre
+   const nuevoNombre = prompt(`Nombre (${campeon.nombre}) - Enter para dejar igual: `)
+   if(nuevoNombre !== ""){
+    campeon.nombre = nuevoNombre
+   }
+
+   //asignamos nuevo rol
+   const nuevoRol = prompt(`Rol (${campeon.rol}) - Enter para dejar igual: `)
+   if(nuevoRol !== ""){
+    campeon.rol = nuevoRol
+   }
+
+   //Asignamos nueva dificultad
+    const textoDificultad = prompt(`Rol (${campeon.dificultad}) - Enter para dejar igual: `)
+    if(textoDificultad !== "") {
+    if(isNaN(nuevaDificultad) || nuevaDificultad < 1 || nuevaDificultad){
+        console.log("Dificultad no válida, se mantiene la anterior")
+    } else {
+        campeon.dificultad = nuevaDificultad
+    }
+    
+    campeon.dificultad = textoDificultad
+   }
+
+   const nuevaFecha = prompt(`Rol (${campeon.fechaDeLanzamiento}) - Enter para dejar igual: `)
+   if(nuevaFecha !== ""){
+    campeon.fechaDeLanzamiento = nuevaFecha
+   }
+
+   console.log(`${campeon.nombre} modificado`)
+
+}
 
 
 //Función de mostrar el menú
@@ -168,3 +213,4 @@ function mostrarMenu() {
     console.log("8. Ordenar por Fecha de Lanzamiento");
     console.log("9. Salir");
 }
+
