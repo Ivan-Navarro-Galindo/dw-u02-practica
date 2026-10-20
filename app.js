@@ -61,6 +61,9 @@ do {
         case 2:
             añadirCampeon(campeones)
             break    
+        case 3:
+            filtrarPorRol(campeones)   
+            break 
     }
 
 
@@ -99,8 +102,8 @@ function añadirCampeon(lista) {
 
     const id = maxId + 1
     
-   const nombre = prompt("Introduce el nombre del Campeon")
-   const dificultad = Number(prompt("Introduce la dificultad (1-10)"))
+   const nombre = prompt("Introduce el nombre del Campeon: ")
+   const dificultad = Number(prompt("Introduce la dificultad (1-10): "))
 
    //Validación de difcultad
    if(isNaN(dificultad) || dificultad <= 0 || dificultad > 10) {
@@ -108,9 +111,11 @@ function añadirCampeon(lista) {
     return
    }
 
-   const rol = prompt("Introduce el rol")
-   const fechaDeLanzamiento = prompt("Introduce la fecha de lanzamiento del campeon (AAAA/MM/DD)")
+   const rol = prompt("Introduce el rol: ")
+   const fechaDeLanzamiento = prompt("Introduce la fecha de lanzamiento del campeon (AAAA/MM/DD): ")
 
+
+   //Creamos el Objeto del nuevo Campeon
    const nuevoCampeon = {
     id,
     nombre,
@@ -119,10 +124,36 @@ function añadirCampeon(lista) {
     fechaDeLanzamiento
    }
 
+   //Añadimos al nuevo campeon a la lista de campeones
    lista.push(nuevoCampeon)
    console.log(`${nuevoCampeon.nombre} añadido con id ${nuevoCampeon.id}`)
 
 }
+
+
+//Variables y validaciones para la función para filtrar por Rol
+
+function filtrarPorRol(lista) {
+
+const rolesValidos = ["jungla", "support", "carry", "top", "mid"]
+const rol = prompt("Introduce el rol: ").toLowerCase()
+
+//Validación para que sea un rol valido
+
+if(!rolesValidos.includes(rol)) {
+    console.log("Introduce un rol válido")
+    return
+}
+
+   const filtrados = lista.filter(campeon => campeon.rol.toLowerCase() === rol)
+
+   mostrarCampeones(filtrados)
+
+
+
+}
+
+
 
 //Función de mostrar el menú
 function mostrarMenu() {
@@ -136,6 +167,4 @@ function mostrarMenu() {
     console.log("7. Ordenar por ID")
     console.log("8. Ordenar por Fecha de Lanzamiento");
     console.log("9. Salir");
-    
-    
 }
