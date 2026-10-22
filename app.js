@@ -64,6 +64,23 @@ do {
         case 3:
             filtrarPorRol(campeones)   
             break 
+        case 4: 
+            modificarCampeon(campeones)  
+            break  
+        case 5:
+            eliminarCampeon(campeones)
+            break
+        case 6: 
+            buscarPorNombres(campeones)
+            break
+        case 7:
+            ordenarPorId(campeones)
+            break
+        case 8:
+            ordenarPorFechaDeLanzamiento(campeones)
+            break
+        default:
+            console.log("Introduce un número valido")
     }
 
 
@@ -74,7 +91,7 @@ do {
     //Mostar Entradas
 //Mostramos una lista de los campeones
 
-function mostrarCampeones(lista) {
+function mostrarCampeones(lita) {
 
     if(lista.length === 0){
         console.log("El listado esta vacio")
@@ -181,8 +198,10 @@ function modificarCampeon(lista) {
    //Asignamos nueva dificultad
     const textoDificultad = prompt(`Rol (${campeon.dificultad}) - Enter para dejar igual: `)
     if(textoDificultad !== "") {
-    if(isNaN(nuevaDificultad) || nuevaDificultad < 1 || nuevaDificultad){
-        console.log("Dificultad no válida, se mantiene la anterior")
+
+    if(isNaN(nuevaDificultad) || nuevaDificultad < 1 || nuevaDificultad > 10){ //Comprobamos que la dificultad
+    console.log("Dificultad no válida, se mantiene la anterior")
+    
     } else {
         campeon.dificultad = nuevaDificultad
     }
@@ -190,6 +209,7 @@ function modificarCampeon(lista) {
     campeon.dificultad = textoDificultad
    }
 
+   //Asignamos nueva fecha
    const nuevaFecha = prompt(`Rol (${campeon.fechaDeLanzamiento}) - Enter para dejar igual: `)
    if(nuevaFecha !== ""){
     campeon.fechaDeLanzamiento = nuevaFecha
@@ -199,6 +219,58 @@ function modificarCampeon(lista) {
 
 }
 
+//Función de eliminar campeon
+function eliminarCampeon(lista) {
+
+    mostrarCampeones(lista)
+    
+    //Variable para guadar el id 
+    const id = Number(prompt("Introduce el id del campeon a eliminar: "))
+
+
+    //Recorremos el array y comparamos el id pasado con el id original, si no lo encuentra no existe
+    const indice = lista.findIndex(c => c.id === id)
+    if(indice === -1) {
+        console.log("Introduce un campeon existente")
+        return
+    }
+
+
+    //Dada la respuesta sea s o n validamos que existe y lo eliminamos
+    const respuesta = prompt(`¿Seguro que quieres eliminar a ${lista[indice].nombre}? (s/n): `).toLowerCase()
+    if(respuesta !== "s") {
+        console.log("Eliminación cancelada")
+        return
+    }
+
+
+    const nombre = lista[indice].nombre
+    lista.splice(indice, 1) //Eliminamos con splice
+    console.log(`${nombre} eliminado`)
+}
+
+function buscarPorNombres(lista) {
+
+    const nombre = prompt("Introduce el Nombre: ").toLowerCase()
+       
+    const resultados = lista.filter(c => c.nombre.toLowerCase().includes(nombre))
+    
+    mostrarCampeones(resultados)
+}
+
+function ordenarPorId(lista) {
+
+    //Ordeno de manera descendente, antes estaba ascendente pero no tenia mucho sentido
+    lista.sort((a, b) => b.id - a.id)
+
+    mostrarCampeones(lista)
+}
+
+function ordenarPorFechaDeLanzamiento(lista){
+    lista.sort((a, b) => a.fechaDeLanzamiento.localeCompare(b.fechaDeLanzamiento) )
+
+    mostrarCampeones(lista)
+}
 
 //Función de mostrar el menú
 function mostrarMenu() {
@@ -213,4 +285,3 @@ function mostrarMenu() {
     console.log("8. Ordenar por Fecha de Lanzamiento");
     console.log("9. Salir");
 }
-
